@@ -1,21 +1,23 @@
+# Используем базовый образ Go
 FROM golang:1.20 AS builder
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
-
-RUN go mod download
-
+# Копируем исходный код
 COPY . .
 
+# Сборка приложения
 RUN go build -o app .
 
+# Используем минимальный образ для выполнения
 FROM alpine:latest
-
-COPY --from=builder /app/app /app/app
 
 WORKDIR /app
 
+# Копируем собранное приложение
+COPY --from=builder /app/app .
+
+# Команда запуска
 CMD ["./app"]
 
-EXPOSE 8080
+
