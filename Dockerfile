@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Сборка приложения
-RUN go build -o app .
+RUN go build -o app main.go
 
 # Используем минимальный образ для выполнения
 FROM alpine:latest
